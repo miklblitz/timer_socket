@@ -2,7 +2,7 @@ defmodule TimerSocket.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", TimerSocket.RoomChannel
+  channel "timer:*", TimerSocket.TimerChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
