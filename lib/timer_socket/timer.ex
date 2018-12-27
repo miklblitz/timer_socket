@@ -13,11 +13,15 @@ defmodule TimerSocket.Timer do
   #SERVER
   def init(_state) do
     Logger.warn "Timer was started"
-    #IO.inspect _state
-    broadcast(5, "Started timer")
-    broadcast_guess("Voi la")
-    schedule_timer(1_000)
-    {:ok, 5}
+    TimerSocket.Endpoint.subscribe "timer:start", []
+    {:ok, nil}
+  end
+
+  def handle_info(%{event: "start_timer"}, _time) do
+    duration = 30
+    schedule_timer 1_000
+    broadcast duration, "The timer was started"
+    {:noreply, duration}
   end
 
   def handle_info(:update, 0) do

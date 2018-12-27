@@ -9,4 +9,9 @@ defmodule TimerSocket.TimerChannel do
     push socket, "new_time", msg
     {:noreply, socket}
   end
+
+  def handle_in("start_timer", _, socket) do
+    TimerSocket.Endpoint.broadcast "timer:start", "start_timer", %{}
+    {:noreply, socket}
+  end
 end

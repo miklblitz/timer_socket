@@ -60,8 +60,19 @@ channel.join()
   .receive("error", resp => { console.log("Unable to join", resp) })
 
 channel.on('new_time', msg=>{
-    console.log("The timer is:", msg.time)
+    //console.log("The timer is:", msg.time)
+    document.getElementById('status').innerHTML = msg.response
+    document.getElementById('timer').innerHTML = msg.time
 });
+
+let startTimer = function (event) {
+    event.preventDefault()
+    console.log('click')
+    channel.push('start_timer', {})
+        .receive('ok', resp => { console.log("The timer is started", resp)})
+}
+
+document.getElementById('start-timer').onclick = startTimer
 
 let guess_channel = socket.channel("guess:guess", {})
 guess_channel.join()
