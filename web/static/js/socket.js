@@ -62,4 +62,17 @@ channel.join()
 channel.on('new_time', msg=>{
     console.log("The timer is:", msg.time)
 });
+
+let guess_channel = socket.channel("guess:guess", {})
+guess_channel.join()
+    .receive("ok", resp => {
+        console.log("Joined to timer-guess", resp)
+        console.log(socket)
+    })
+    .receive("error", resp => { console.log("Eror connect to timer-guess", resp) })
+
+guess_channel.on('guess-number', msg=>{
+    console.log(msg.response);
+});
+
 export default socket
